@@ -1,24 +1,7 @@
 import React, {useState} from 'react'
-import {Link} from 'react-router-dom'
+import {Link, To} from 'react-router-dom'
+import routes from "../../services/routes";
 
-const navData = [
-    {
-        name: 'Home',
-        path: '/home',
-    },
-    {
-        name: 'About',
-        path: '/about',
-    },
-    {
-        name: 'Projects',
-        path: '/projects',
-    },
-    {
-        name: 'Contact',
-        path: '/contact',
-    },
-]
 
 const Navbar = () => {
     const [isModalOpen, setModalOpen] = useState(false)
@@ -28,9 +11,9 @@ const Navbar = () => {
                 <h1 className="h-[3.5rem] flex items-center text-center">Logo</h1>
             </Link>
             <nav className="hidden md:flex space-x-10 items-center">
-                {navData.map((n) => {
+                {routes.map((n) => {
                     return (
-                        <Link key={n.name} to={n.path}>
+                        <Link key={n.name} to={n.path as To}>
                             {n.name}
                         </Link>
                     )
