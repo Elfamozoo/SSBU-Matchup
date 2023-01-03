@@ -1,5 +1,6 @@
 import Home from "../components/Home/Home";
-import {RouteObject} from "react-router-dom";
+import { RouteObject } from "react-router-dom";
+import MatchUp from "../components/MatchUp/MatchUp";
 
 type CustomRouteObject = {
     name: string
@@ -9,12 +10,12 @@ const routes: CustomRouteObject[] = [
     {
         name: "Accueil",
         path: '/',
-        element: <Home/>,
+        element: <Home />,
     },
     {
         name: "Match Up",
         path: '/matchup',
-        element: <Home/>,
+        element: <MatchUp />,
     },
 ]
 
