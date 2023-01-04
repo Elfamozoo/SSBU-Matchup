@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { fetchCharacters, fetchVodByCharactersId } from '../../features/smashApi';
+import { Character } from '../../types';
 import ScrollToTop from "react-scroll-to-top";
 
 const MatchUp = () => {
-    const [characters, setCharacters] = useState([]);
+    const [characters, setCharacters] = useState<Character[]>([]);
 
     useEffect(() => {
         fetchCharacters().then(setCharacters);
@@ -22,7 +23,7 @@ const MatchUp = () => {
                                 onClick={() =>
                                     fetchVodByCharactersId(character.id).then(vods => {
                                         console.log(vods);
-                                        
+
                                     })
                                 }
                                 className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700"

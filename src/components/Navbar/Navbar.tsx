@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, To } from 'react-router-dom';
 import routes from '../../services/routes';
 
 const Navbar = () => {
@@ -12,7 +12,7 @@ const Navbar = () => {
             <nav className="hidden md:flex space-x-10 items-center">
                 {routes.map((route) => {
                     return (
-                        <Link key={route.name} to={route.path}>
+                        <Link key={route.name} to={route.path as To}>
                             {route.name}
                         </Link>
                     );
@@ -44,7 +44,7 @@ const Navbar = () => {
                                     {routes.map((route) => (
                                         <Link
                                             key={route.name}
-                                            to={route.path}
+                                            to={route.path as To}
                                             className="block px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200"
                                         >
                                             <h1 className="">
