@@ -11,6 +11,10 @@ const MatchUp = () => {
         fetchCharacters().then(setCharacters);
     }, []);
     console.log(charactersIds)
+    const isIdSelected = (id :string) => {
+        return charactersIds.includes(id)
+    }
+    const isDisable = !!charactersIds.at(1);
     return (
         <>
             <div className="container mx-auto">
@@ -29,17 +33,18 @@ const MatchUp = () => {
                             <img src={`../../src/assets/smashbrosicon/${character.id}.png`} alt={character.name}
                                  className="h-32 w-32 object-cover rounded-full mx-auto mb-4"/>
                             <h2 className="text-xl font-bold mb-2 text-center">{character.name}</h2>
-                            <input type={"checkbox"} onChange={(event) => {
+                            <input disabled={isDisable && !isIdSelected(character.id)} className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700"
+                                   type={"checkbox"} onChange={(event) => {
                                 if (event.target.checked) {
                                     setCharactersIds([...charactersIds, character.id])
                                 } else {
                                     const localArray: string[] = [...charactersIds]
                                     const index = localArray.indexOf(character.id)
-                                    localArray.splice(index,1)
+                                    localArray.splice(index, 1)
                                     setCharactersIds(localArray)
                                 }
                             }}
-                                   className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700">
+                            >
                             </input>
                         </li>
                     ))}
