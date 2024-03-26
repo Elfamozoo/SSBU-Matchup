@@ -5,12 +5,12 @@ import ScrollToTop from "react-scroll-to-top";
 
 const MatchUp = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
-    const [charactersId, setCharactersId ] = useState<string>();
+    const [charactersIds, setCharactersIds] = useState<string[]>([]);
 
     useEffect(() => {
         fetchCharacters().then(setCharacters);
     }, []);
-
+    console.log(charactersIds)
     return (
         <>
             <div className="container mx-auto">
@@ -30,9 +30,14 @@ const MatchUp = () => {
                                  className="h-32 w-32 object-cover rounded-full mx-auto mb-4"/>
                             <h2 className="text-xl font-bold mb-2 text-center">{character.name}</h2>
                             <input type={"checkbox"} onChange={(event) => {
-                                setCharactersId(character.id)
-                                console.log(charactersId)
-                            } }
+                                if (event.target.checked) {
+                                    setCharactersIds([...charactersIds, character.id])
+                                } else {
+                                    const index = charactersIds.indexOf(character.id)
+                                    console.log(charactersIds.splice(index,1))
+                                    setCharactersIds([...charactersIds.splice(index,1)])
+                                }
+                            }}
                                    className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700">
                             </input>
                         </li>
