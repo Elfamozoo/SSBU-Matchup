@@ -33,9 +33,10 @@ const MatchUp = () => {
                                 if (event.target.checked) {
                                     setCharactersIds([...charactersIds, character.id])
                                 } else {
-                                    const index = charactersIds.indexOf(character.id)
-                                    console.log(charactersIds.splice(index,1))
-                                    setCharactersIds([...charactersIds.splice(index,1)])
+                                    const localArray: string[] = [...charactersIds]
+                                    const index = localArray.indexOf(character.id)
+                                    localArray.splice(index,1)
+                                    setCharactersIds(localArray)
                                 }
                             }}
                                    className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700">
