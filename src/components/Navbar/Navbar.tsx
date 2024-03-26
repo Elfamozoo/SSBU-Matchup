@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <div className="flex container w-full mx-auto justify-between items-center font-bold text-2xl px-5 py-6">
             <Link to="/">
-                <h1 className="h-3.5rem flex items-center text-center">Logo</h1>
+                <img className="block h-8 w-auto" src={`../../src/assets/logo.png`}></img>
             </Link>
             <nav className="hidden md:flex space-x-10 items-center">
                 {routes.map((route) => {
