@@ -1,37 +1,55 @@
 import Home from "../components/Home/Home";
-import { RouteObject } from "react-router-dom";
+import {createBrowserRouter, RouteObject} from "react-router-dom";
 import MatchUp from "../components/MatchUp/MatchUp";
 import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
 import ListMatchup from "../components/ListMatchUp/ListMatchUp";
+import {fetchVodByCharactersId} from "../features/smashApi";
+import Root from "../components/Root/Root";
 
 type CustomRouteObject = {
     name: string
 } & RouteObject
 
-const routes: CustomRouteObject[] = [
+export const routes: CustomRouteObject[] = [
     {
         name: "Accueil",
         path: '/',
-        element: <Home />,
+        element: <Home/>,
     },
     {
         name: "Match Up",
         path: '/matchup',
-        element: <MatchUp />,
+        element: <MatchUp/>,
     },
     {
-        name:"Video Player",
+        name: "Video Player",
         path: '/videolayer',
         element: <VideoPlayer/>,
 
     },
     {
-        name:"List Match Up",
+        name: "List Match Up",
         path: '/listmatchup',
         element: <ListMatchup/>,
+        loader: async () => {
+            return await fetchVodByCharactersId("10")
+        },
 
     },
 ]
 
-export default routes
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root/>,
+        children: routes.map((route) => {
+            const {name, ...rest} = route;
+            return rest;
+        })
+    },
+]);
+
+
+export default router
+
 

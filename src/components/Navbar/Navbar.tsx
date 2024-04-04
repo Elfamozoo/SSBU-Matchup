@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Link, To } from 'react-router-dom';
-import routes from '../../services/routes';
+import React, {useState} from 'react';
+import {Link, To} from 'react-router-dom';
+import {routes} from '../../services/routes';
 
 const Navbar = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -24,7 +24,8 @@ const Navbar = () => {
                         className="bg-#161B21 border-1px border-red-100 fixed w-24rem right-0 top-0 h-100vh transition translate-x-1px rounded-lg text-white"
                     >
                         <div className="pt-5 pb-6 px-5">
-                            <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setModalOpen(!isModalOpen)}>
+                            <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                                    onClick={() => setModalOpen(!isModalOpen)}>
                                 <svg
                                     className="w-6 h-6"
                                     fill="currentColor"
@@ -57,7 +58,8 @@ const Navbar = () => {
                         </div>
                     </div>
                 ) : (
-                    <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onClick={() => setModalOpen(!isModalOpen)}>
+                    <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
+                            onClick={() => setModalOpen(!isModalOpen)}>
                         <svg
                             className="w-6 h-6"
                             fill="currentColor"

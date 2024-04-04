@@ -1,18 +1,10 @@
 import './App.css'
-import Navbar from "./components/Navbar/Navbar";
-import {useRoutes} from 'react-router-dom';
-import Footer from "./components/Footer/Footer";
-import routes from './services/routes'
+import {RouterProvider} from "react-router-dom";
+import router from "./services/routes";
+
 
 function App() {
-    const routing = useRoutes(routes);
-    return (
-        <>
-            <Navbar/>
-            {routing}
-            <Footer/>
-        </>
-    )
+    return <RouterProvider router={router} />
 }
 
 export default App
