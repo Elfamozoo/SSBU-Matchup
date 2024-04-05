@@ -22,20 +22,21 @@ export const routes: CustomRouteObject[] = [
         element: <MatchUp/>,
     },
     {
+        name: "List Match Up",
+        path: '/listmatchup/:characterId/:characterId2?',
+        element: <ListMatchup/>,
+        loader: async ({params}) => {
+            return await fetchVodByCharactersId(params.characterId ? params.characterId : "",params.characterId2)
+        },
+
+    },
+    {
         name: "Video Player",
         path: '/videolayer',
         element: <VideoPlayer/>,
 
     },
-    {
-        name: "List Match Up",
-        path: '/listmatchup',
-        element: <ListMatchup/>,
-        loader: async () => {
-            return await fetchVodByCharactersId("10")
-        },
 
-    },
 ]
 
 const router = createBrowserRouter([
