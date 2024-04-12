@@ -8,6 +8,7 @@ import Root from "../components/Root/Root";
 
 type CustomRouteObject = {
     name: string
+    isNotWatchable?: boolean,
 } & RouteObject
 
 export const routes: CustomRouteObject[] = [
@@ -25,8 +26,9 @@ export const routes: CustomRouteObject[] = [
         name: "List Match Up",
         path: '/listmatchup/:characterId/:characterId2?',
         element: <ListMatchup/>,
+        isNotWatchable: true,
         loader: async ({params}) => {
-            return await fetchVodByCharactersId(params.characterId ? params.characterId : "",params.characterId2)
+            return await fetchVodByCharactersId(params.characterId ? params.characterId : "", params.characterId2)
         },
 
     },
