@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import {Link, To} from 'react-router-dom';
-import {routes} from '../../services/routes';
+import {Link} from 'react-router-dom';
+import {NavLink} from "../NavLink/NavLink";
 
 const Navbar = () => {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -10,13 +10,7 @@ const Navbar = () => {
                 <img className="block h-8 w-auto" src={`../../src/assets/logo.png`}></img>
             </Link>
             <nav className="hidden md:flex space-x-10 items-center">
-                {routes.map((route) => {
-                    return (
-                        <Link key={route.name} to={route.path as To}>
-                            {route.name}
-                        </Link>
-                    );
-                })}
+                <NavLink/>
             </nav>
             <div className="md:hidden">
                 {isModalOpen ? (
@@ -42,17 +36,7 @@ const Navbar = () => {
 
                             <div className="mt-5rem z-10 relative">
                                 <div className="absolute right-0 mt-2 py-2 bg-white rounded-md shadow-xl">
-                                    {routes.map((route) => (
-                                        <Link
-                                            key={route.name}
-                                            to={route.path as To}
-                                            className="block px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200"
-                                        >
-                                            <h1 className="">
-                                                {route.name}
-                                            </h1>
-                                        </Link>
-                                    ))}
+                                    <NavLink className="block px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200"/>
                                 </div>
                             </div>
                         </div>
