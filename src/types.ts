@@ -4,14 +4,24 @@ export type Vod = {
     videoDescription: string;
     tournament: string;
     round: string;
-    player1: string;
-    player2: string;
-    player1Characters: string;
-    player2Characters: string;
+    player1: Player;
+    player2: Player;
+    player1Characters: Character[];
+    player2Characters: Character[];
+    channel: Channel[];
 }
 
 export type Character = {
     id: string;
     name: string;
     aliases: string;
+}
+
+export type Player = {
+    name: string
+}
+
+export type Channel = {
+    id: string;
+    name: string;
 }
