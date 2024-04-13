@@ -34,7 +34,7 @@ export const routes: CustomRouteObject[] = [
     },
     {
         name: "Video Player",
-        path: '/videolayer',
+        path: '/videoplayer',
         element: <VideoPlayer/>,
 
     },
