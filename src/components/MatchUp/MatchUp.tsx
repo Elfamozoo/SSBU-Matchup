@@ -3,12 +3,17 @@ import {fetchCharacters} from '../../features/smashApi';
 import {Character} from '../../types';
 import ScrollToTop from "react-scroll-to-top";
 import {useNavigate} from "react-router-dom";
+import MatchUpCharactersRow from "../MatchUpCharactersRow/MatchUpCharactersRow";
 
 const MatchUp = () => {
     const [characters, setCharacters] = useState<Character[]>([]);
     const [charactersIds, setCharactersIds] = useState<string[]>([]);
     const navigate = useNavigate()
 
+    useEffect(() => {
+        fetchCharacters().then(setCharacters);
+    }, []);
+    console.log(charactersIds)
     const selectCharacters = (character: Character, checked: boolean) => {
         if (checked) {
             setCharactersIds([...charactersIds, character.id])
@@ -19,15 +24,6 @@ const MatchUp = () => {
             setCharactersIds(localArray)
         }
     }
-
-    useEffect(() => {
-        fetchCharacters().then(setCharacters);
-    }, []);
-    console.log(charactersIds)
-    const isIdSelected = (id: string) => {
-        return charactersIds.includes(id)
-    }
-    const isDisable = !!charactersIds.at(1);
     return (
         <>
             <div className="container mx-auto">
@@ -40,21 +36,8 @@ const MatchUp = () => {
                     personnages pour chercher les VODs qui corresponds a ce matchup
                     specifique.</p>
                 <ul className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-4">
-                    {characters.map(character => (
-                        <li key={character.id}
-                            className="col-span-1 bg-white rounded-lg shadow divide-y divide-gray-200">
-                            <img src={`../../src/assets/smashbrosicon/${character.id}.png`} alt={character.name}
-                                 className="h-32 w-32 object-cover rounded-full mx-auto mb-4"/>
-                            <h2 className="text-xl font-bold mb-2 text-center">{character.name}</h2>
-                            <input disabled={isDisable && !isIdSelected(character.id)}
-                                   className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700"
-                                   type={"checkbox"} onChange={(event) =>
-                                selectCharacters(character, event.target.checked)
-                            }
-                            >
-                            </input>
-                        </li>
-                    ))}
+                    <MatchUpCharactersRow characters={characters} charactersIds={charactersIds}
+                                          selectCharacters={selectCharacters}/>
                 </ul>
                 <button onClick={() => {
                     navigate(`/listmatchup/${charactersIds[0]}/${charactersIds[1] ?? ""}`)
