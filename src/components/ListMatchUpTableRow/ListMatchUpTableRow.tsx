@@ -15,7 +15,7 @@ const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
                         {matchup.tournament}
                     </th>
                     <td className="text-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
-                        <a className={"text-indigo-600 hover:text-indigo-900"} onClick={() => {
+                        <a className={"text-indigo-600 hover:text-indigo-900 cursor-pointer"} onClick={() => {
                             navigate(`/videoplayer/${matchup.id}`)
                         }}>
                             {matchup.player1characters.map(character => (
