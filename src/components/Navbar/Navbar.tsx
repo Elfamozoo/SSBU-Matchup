@@ -7,7 +7,7 @@ const Navbar = () => {
     return (
         <div className="flex container w-full mx-auto justify-between items-center font-bold text-2xl px-5 py-6">
             <Link to="/">
-                <img className="block h-8 w-auto" src={`../../src/assets/logo.png`}></img>
+                <img className="block h-8 w-auto" src={`/assets/logo.png`}></img>
             </Link>
             <nav className="hidden md:flex space-x-10 items-center">
                 <NavLink/>

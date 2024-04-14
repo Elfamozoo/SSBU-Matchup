@@ -3,7 +3,6 @@ import {Vod} from "../../types";
 import {useNavigate} from "react-router-dom";
 
 
-
 const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
     const navigate = useNavigate()
     console.log(props.listMatchups)
@@ -21,13 +20,13 @@ const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
                         }}>
                             {matchup.player1characters.map(character => (
                                 <img className=" inline w-8 object-cover rounded-full mx-auto mb-4"
-                                     src={`../../src/assets/smashbrosicon/${character.id}.png`} alt={character.name}/>
+                                     src={`/assets/smashbrosicon/${character.id}.png`} alt={character.name}/>
                             ))}{matchup.player1.name}
-                        {" VS "}
+                            {" VS "}
                             {matchup.player2.name}
                             {matchup.player2characters.map(character => (
                                 <img className="inline w-8 object-cover rounded-full mx-auto mb-4"
-                                     src={`../../src/assets/smashbrosicon/${character.id}.png`} alt={character.name}/>
+                                     src={`/assets/smashbrosicon/${character.id}.png`} alt={character.name}/>
                             ))}
                         </a>
 
