@@ -45,7 +45,7 @@ export const routes: CustomRouteObject[] = [
 
 ]
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
     {
         path: "/",
         element: <Root/>,
@@ -55,8 +55,5 @@ const router = createBrowserRouter([
         })
     },
 ]);
-
-
-export default router
 
 
