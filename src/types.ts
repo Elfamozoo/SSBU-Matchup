@@ -6,8 +6,8 @@ export type Vod = {
     round: string;
     player1: Player;
     player2: Player;
-    player1Characters: Character[];
-    player2Characters: Character[];
+    player1characters: Character[];
+    player2characters: Character[];
     channel: Channel[];
 }
 
