@@ -26,7 +26,7 @@ const MatchUpCharactersRow = (props: {
                     >
                     </input>
                 </li>
-            ))}np
+            ))}
         </>
     );
 };
