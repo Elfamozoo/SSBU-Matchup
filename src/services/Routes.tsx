@@ -36,6 +36,7 @@ export const routes: CustomRouteObject[] = [
         name: "Video Player",
         path: '/videoplayer/:id',
         element: <VideoPlayer/>,
+        isNotWatchable: true,
         loader: async ({params}) => {
             return await fetchVodByVideoPlayerId(params.id ? params.id : "")
         },
