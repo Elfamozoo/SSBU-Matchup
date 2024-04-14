@@ -1,8 +1,12 @@
+import React from 'react';
+import {Vod} from "../../types";
+import {useLoaderData} from "react-router-dom";
 const VideoPlayer = () => {
+    const VideoPlayerDescription = useLoaderData() as Vod
+    console.log(VideoPlayerDescription)
     return (
-        <h1 className="text-5xl font-bold underline">
-            Video Player
-        </h1>
+        <>
+        </>
     )
 }
 
