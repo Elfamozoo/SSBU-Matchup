@@ -1,5 +1,5 @@
 import React from 'react';
-import {routes} from "../../services/routes";
+import {routes} from "../../services/Routes";
 import {Link, To} from "react-router-dom";
 
 export const NavLink = (props: { className?: string }) => {
