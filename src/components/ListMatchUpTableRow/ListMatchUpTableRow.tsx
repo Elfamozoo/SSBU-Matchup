@@ -15,7 +15,7 @@ const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
                         <a className={""}>
                             {matchup.player1characters.map(character => (
                                 <img className=" inline w-8 object-cover rounded-full mx-auto mb-4"
-                                     src={`../../src/assets/smashbrosicon/${character.id}.png`}/>
+                                     src={`../../src/assets/smashbrosicon/${character.id}.png`} alt={character.name}/>
                             ))}{matchup.player1.name}
                         </a>
                         {" VS "}
@@ -23,7 +23,7 @@ const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
                             {matchup.player2.name}
                             {matchup.player2characters.map(character => (
                                 <img className="inline w-8 object-cover rounded-full mx-auto mb-4"
-                                     src={`../../src/assets/smashbrosicon/${character.id}.png`}/>
+                                     src={`../../src/assets/smashbrosicon/${character.id}.png`} alt={character.name}/>
                             ))}
                         </a>
 

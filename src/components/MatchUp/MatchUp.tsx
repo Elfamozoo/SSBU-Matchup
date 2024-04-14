@@ -9,6 +9,17 @@ const MatchUp = () => {
     const [charactersIds, setCharactersIds] = useState<string[]>([]);
     const navigate = useNavigate()
 
+    const selectCharacters = (character: Character, checked: boolean) => {
+        if (checked) {
+            setCharactersIds([...charactersIds, character.id])
+        } else {
+            const localArray: string[] = [...charactersIds]
+            const index = localArray.indexOf(character.id)
+            localArray.splice(index, 1)
+            setCharactersIds(localArray)
+        }
+    }
+
     useEffect(() => {
         fetchCharacters().then(setCharacters);
     }, []);
@@ -37,16 +48,9 @@ const MatchUp = () => {
                             <h2 className="text-xl font-bold mb-2 text-center">{character.name}</h2>
                             <input disabled={isDisable && !isIdSelected(character.id)}
                                    className="px-4 py-2 rounded-full bg-red-600 text-white font-bold hover:bg-red-700"
-                                   type={"checkbox"} onChange={(event) => {
-                                if (event.target.checked) {
-                                    setCharactersIds([...charactersIds, character.id])
-                                } else {
-                                    const localArray: string[] = [...charactersIds]
-                                    const index = localArray.indexOf(character.id)
-                                    localArray.splice(index, 1)
-                                    setCharactersIds(localArray)
-                                }
-                            }}
+                                   type={"checkbox"} onChange={(event) =>
+                                selectCharacters(character, event.target.checked)
+                            }
                             >
                             </input>
                         </li>
