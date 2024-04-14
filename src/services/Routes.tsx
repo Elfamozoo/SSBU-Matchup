@@ -3,7 +3,7 @@ import {createBrowserRouter, RouteObject} from "react-router-dom";
 import MatchUp from "../components/MatchUp/MatchUp";
 import VideoPlayer from "../components/VideoPlayer/VideoPlayer";
 import ListMatchup from "../components/ListMatchUp/ListMatchUp";
-import {fetchVodByCharactersId} from "../features/smashApi";
+import {fetchVodByCharactersId, fetchVodByVideoPlayerId} from "../features/smashApi";
 import Root from "../components/Root/Root";
 
 type CustomRouteObject = {
@@ -34,8 +34,11 @@ export const routes: CustomRouteObject[] = [
     },
     {
         name: "Video Player",
-        path: '/videoplayer',
+        path: '/videoplayer/:id',
         element: <VideoPlayer/>,
+        loader: async ({params}) => {
+            return await fetchVodByVideoPlayerId(params.id ? params.id : "")
+        },
 
     },
 
