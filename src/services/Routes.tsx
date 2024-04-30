@@ -24,11 +24,11 @@ export const routes: CustomRouteObject[] = [
     },
     {
         name: "List Match Up",
-        path: '/listmatchup/:characterId/:characterId2?',
+        path: '/listmatchup/:characterId/:characterId2?/:page?',
         element: <ListMatchup/>,
         isNotWatchable: true,
         loader: async ({params}) => {
-            return await fetchVodByCharactersId(params.characterId ? params.characterId : "", params.characterId2)
+            return await fetchVodByCharactersId(params.characterId ? params.characterId : "", params.characterId2, params.page)
         },
 
     },

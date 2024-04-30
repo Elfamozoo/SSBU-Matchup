@@ -6,10 +6,11 @@ const {
 
 const searchParams = new URLSearchParams(API_VOD);
 
-export const fetchVodByCharactersId = async (id1: string, id2?: string) => {
+export const fetchVodByCharactersId = async (id1: string, id2?: string, page?: string) => {
     const searchParams = new URLSearchParams();
     searchParams.append("character1", id1)
     if (id2) searchParams.append("character2", id2)
+    if (page) searchParams.append("page", page)
     return fetch(`${API_VOD}?${searchParams.toString()}`)
         .then(res => res.json())
         .then(data => data.items)

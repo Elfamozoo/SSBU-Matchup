@@ -40,7 +40,7 @@ const MatchUp = () => {
                                           selectCharacters={selectCharacters}/>
                 </ul>
                 <button onClick={() => {
-                    navigate(`/listmatchup/${charactersIds[0]}/${charactersIds[1] ?? ""}`)
+                    navigate(`/listmatchup/${charactersIds[0]}/${charactersIds[1] ?? ""}/1`)
                 }} className="bg-red-700 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded">
                     MATCH UP !
                 </button>
