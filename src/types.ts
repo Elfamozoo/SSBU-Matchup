@@ -1,3 +1,8 @@
+export type VodResponses = {
+    count: number;
+    items: Vod[]
+}
+
 export type Vod = {
     id: string;
     uploadDate: string;

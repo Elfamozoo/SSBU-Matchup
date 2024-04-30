@@ -1,11 +1,12 @@
 import React from "react";
 import {useLoaderData} from "react-router-dom";
-import {Vod} from "../../types";
+import {VodResponses} from "../../types";
 import ListMatchUpColumnHeader from "../ListMatchUpColumnHeader/ListMatchUpColumnHeader";
 import ListMatchUpTableRow from "../ListMatchUpTableRow/ListMatchUpTableRow";
+import Pagination from "../Pagination/Pagination";
 
 const ListMatchup = () => {
-    const listMatchups = useLoaderData() as Vod[];
+    const listMatchups = useLoaderData() as VodResponses
     console.log(listMatchups)
 
     return (
@@ -18,9 +19,10 @@ const ListMatchup = () => {
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <ListMatchUpColumnHeader/>
                         <tbody>
-                        <ListMatchUpTableRow listMatchups={listMatchups}/>
+                        <ListMatchUpTableRow listMatchups={listMatchups.items}/>
                         </tbody>
                     </table>
+                    <Pagination/>
                 </div>
             </div>
         </>

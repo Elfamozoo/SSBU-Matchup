@@ -5,7 +5,6 @@ import {useNavigate} from "react-router-dom";
 
 const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
     const navigate = useNavigate()
-    console.log(props.listMatchups)
     return (
         <>
             {props.listMatchups.map(matchup => (
