@@ -1,4 +1,3 @@
-import React from "react";
 import {useLoaderData} from "react-router-dom";
 import {VodResponses} from "../../types";
 import ListMatchUpColumnHeader from "../ListMatchUpColumnHeader/ListMatchUpColumnHeader";
@@ -22,7 +21,7 @@ const ListMatchup = () => {
                         <ListMatchUpTableRow listMatchups={listMatchups.items}/>
                         </tbody>
                     </table>
-                    <Pagination/>
+                    <Pagination countResults={listMatchups.count}/>
                 </div>
             </div>
         </>
