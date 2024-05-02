@@ -1,7 +1,6 @@
-import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 
 const Pagination = (props: { countResults: number }) => {
-
     const calculatePages = () => {
         return Math.ceil(props.countResults / 10);
     }
@@ -11,12 +10,7 @@ const Pagination = (props: { countResults: number }) => {
         return page + 1
     })
     const navigate = useNavigate()
-
-    const [searchParams, setSearchParams] = useSearchParams();
-
     const location = useLocation()
-    const urlWithoutLastParameter = new URL(".", window.origin + location.pathname);
-    console.log(urlWithoutLastParameter)
     return (
         <>
             <nav className="flex justify-between items-center gap-x-1">
@@ -34,7 +28,7 @@ const Pagination = (props: { countResults: number }) => {
                 <div className="flex items-center gap-x-1">
                     {pages.map(page => (
                         <button onClick={() => {
-                            navigate(`${urlWithoutLastParameter.pathname}${page}`)
+                            navigate(`${location.pathname}?page=${page}`)
                         }} type="button"
                                 className="min-h-[38px] min-w-[38px] flex justify-center items-center bg-gray-200 text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-600 dark:text-white dark:focus:bg-neutral-500"
                                 aria-current="page">{page}

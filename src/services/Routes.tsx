@@ -31,7 +31,6 @@ export const routes: CustomRouteObject[] = [
         loader: async ({params, request}) => {
             const url = new URL(request.url);
             const pageQuery = url.searchParams.get("page");
-            console.log(pageQuery)
             return await fetchVodByCharactersId(params.characterId ? params.characterId : "", params.characterId2, pageQuery ?? "1")
         },
 
