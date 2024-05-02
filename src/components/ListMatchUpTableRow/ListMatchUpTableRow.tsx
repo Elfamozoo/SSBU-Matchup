@@ -31,7 +31,11 @@ const ListMatchUpTableRow = (props: { listMatchups: Vod[] }) => {
 
                     </td>
                     <td className="text-center px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-500">
-                        {matchup.uploadDate}
+                        {new Date(matchup.uploadDate).toLocaleDateString("fr-FR", {
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric',
+                        })}
                     </td>
                 </tr>
             ))}
