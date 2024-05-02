@@ -6,6 +6,7 @@ import ListMatchup from "../components/ListMatchUp/ListMatchUp";
 import {fetchVodByCharactersId, fetchVodByVideoPlayerId} from "../features/smashApi";
 import Root from "../components/Root/Root";
 
+
 type CustomRouteObject = {
     name: string
     isNotWatchable?: boolean,
@@ -24,11 +25,14 @@ export const routes: CustomRouteObject[] = [
     },
     {
         name: "List Match Up",
-        path: '/listmatchup/:characterId/:characterId2?/:page?',
+        path: '/listmatchup/:characterId/:characterId2?',
         element: <ListMatchup/>,
         isNotWatchable: true,
-        loader: async ({params}) => {
-            return await fetchVodByCharactersId(params.characterId ? params.characterId : "", params.characterId2, params.page)
+        loader: async ({params, request}) => {
+            const url = new URL(request.url);
+            const pageQuery = url.searchParams.get("page");
+            console.log(pageQuery)
+            return await fetchVodByCharactersId(params.characterId ? params.characterId : "", params.characterId2, pageQuery ?? "1")
         },
 
     },

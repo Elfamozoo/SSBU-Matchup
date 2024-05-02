@@ -6,8 +6,6 @@ const {
     VITE_SMASHBROS_API_YOUTUBE_VOD_URL: API_YOUTUBE
 } = import.meta.env;
 
-const searchParams = new URLSearchParams(API_VOD);
-
 export const fetchVodByCharactersId = async (id1: string, id2?: string, page?: string): Promise<VodResponses> => {
     const searchParams = new URLSearchParams();
     searchParams.append("character1", id1)

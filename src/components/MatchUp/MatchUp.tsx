@@ -13,7 +13,7 @@ const MatchUp = () => {
     useEffect(() => {
         fetchCharacters().then(setCharacters);
     }, []);
-    console.log(charactersIds)
+
     const selectCharacters = (character: Character, checked: boolean) => {
         if (checked) {
             setCharactersIds([...charactersIds, character.id])

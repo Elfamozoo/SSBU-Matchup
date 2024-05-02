@@ -6,7 +6,6 @@ import Pagination from "../Pagination/Pagination";
 
 const ListMatchup = () => {
     const listMatchups = useLoaderData() as VodResponses
-    console.log(listMatchups)
 
     return (
         <>

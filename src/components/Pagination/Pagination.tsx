@@ -1,3 +1,5 @@
+import {useLocation, useNavigate, useSearchParams} from "react-router-dom";
+
 const Pagination = (props: { countResults: number }) => {
 
     const calculatePages = () => {
@@ -8,8 +10,13 @@ const Pagination = (props: { countResults: number }) => {
     const pages = Array.from(iteratorKeys).map(page => {
         return page + 1
     })
+    const navigate = useNavigate()
 
-    console.log(pages)
+    const [searchParams, setSearchParams] = useSearchParams();
+
+    const location = useLocation()
+    const urlWithoutLastParameter = new URL(".", window.origin + location.pathname);
+    console.log(urlWithoutLastParameter)
     return (
         <>
             <nav className="flex justify-between items-center gap-x-1">
@@ -26,9 +33,11 @@ const Pagination = (props: { countResults: number }) => {
 
                 <div className="flex items-center gap-x-1">
                     {pages.map(page => (
-                        < button type="button"
-                                 className="min-h-[38px] min-w-[38px] flex justify-center items-center bg-gray-200 text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-600 dark:text-white dark:focus:bg-neutral-500"
-                                 aria-current="page">{page}
+                        <button onClick={() => {
+                            navigate(`${urlWithoutLastParameter.pathname}${page}`)
+                        }} type="button"
+                                className="min-h-[38px] min-w-[38px] flex justify-center items-center bg-gray-200 text-gray-800 py-2 px-3 text-sm rounded-lg focus:outline-none focus:bg-gray-300 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-600 dark:text-white dark:focus:bg-neutral-500"
+                                aria-current="page">{page}
                         </button>
                     ))}
                 </div>
