@@ -4,7 +4,8 @@ const Pagination = (props: { countResults: number }) => {
     const calculatePages = () => {
         return Math.ceil(props.countResults / 10);
     }
-    const iteratorArray = Array(calculatePages())
+    const pagesTotal = calculatePages();
+    const iteratorArray = Array(pagesTotal)
     const iteratorKeys = iteratorArray.keys()
     const pages = Array.from(iteratorKeys).map(page => {
         return page + 1
@@ -16,10 +17,13 @@ const Pagination = (props: { countResults: number }) => {
     const currentPageString = searchParamsQuery.get("page")
     const currentPageNumber = parseInt(`${currentPageString}`)
 
+    const isDisablePrevious = currentPageNumber == 1;
+    const isDisableNext = currentPageNumber == pagesTotal
+
     return (
         <>
             <nav className="flex justify-between items-center gap-x-1">
-                <button onClick={() => {
+                <button disabled={isDisablePrevious} onClick={() => {
                     navigate(`${location.pathname}?page=${currentPageNumber - 1}`)
                 }} type="button"
                         className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex jusify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10">
@@ -41,7 +45,7 @@ const Pagination = (props: { countResults: number }) => {
                         </button>
                     ))}
                 </div>
-                <button onClick={() => {
+                <button disabled={isDisableNext} onClick={() => {
                     navigate(`${location.pathname}?page=${currentPageNumber + 1}`)
                 }} type="button"
                         className="min-h-[38px] min-w-[38px] py-2 px-2.5 inline-flex jusify-center items-center gap-x-2 text-sm rounded-lg text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10">
