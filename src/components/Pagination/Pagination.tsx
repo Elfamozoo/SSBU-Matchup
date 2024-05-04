@@ -1,5 +1,4 @@
 import {useLocation, useNavigate} from "react-router-dom";
-
 const Pagination = (props: { countResults: number }) => {
     const calculatePages = () => {
         return Math.ceil(props.countResults / 10);
@@ -37,6 +36,7 @@ const Pagination = (props: { countResults: number }) => {
                 </button>
                 <div className="flex items-center gap-x-1">
                     {pages.map(page => (
+                        
                         <button onClick={() => {
                             navigate(`${location.pathname}?page=${page}`)
                         }} type="button"
