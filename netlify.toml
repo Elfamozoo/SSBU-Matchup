@@ -1,0 +1,18 @@
+# netlify.toml — SSBU-Matchup
+
+[build]
+  command = "npm ci && npm run build"
+  publish = "dist"
+
+# Force l’environnement Node, évite l’install Python
+[build.environment]
+  NODE_VERSION = "20"
+  NPM_VERSION  = "10"
+  # Règle l’API Smash Archives (change si besoin dans l’UI Netlify)
+  VITE_SMASH_API = "https://api.smasharchives.com/v1"
+
+# Redirection SPA (react-router) -> index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
