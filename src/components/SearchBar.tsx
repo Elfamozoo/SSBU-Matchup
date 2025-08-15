@@ -18,9 +18,12 @@ export default function SearchBar() {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  // 🔧 Utilisation API Smash Archives par défaut
   const endpoint = useMemo(() => {
-    const base = (import.meta as any)?.env?.VITE_SMASH_API || "/api";
-    return `${base}/search?q=`;
+    const base =
+      (import.meta as any)?.env?.VITE_SMASH_API ||
+      "https://api.smasharchives.com/v1";
+    return `${base}/search?query=`;
   }, []);
 
   useEffect(() => {
@@ -36,12 +39,16 @@ export default function SearchBar() {
       setError(null);
       try {
         const res = await fetch(`${endpoint}${encodeURIComponent(debounced)}`, {
-          signal: ac.signal
+          signal: ac.signal,
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         if (!aborted) {
-          const arr: SearchItem[] = Array.isArray(json?.results) ? json.results : Array.isArray(json) ? json : [];
+          const arr: SearchItem[] = Array.isArray(json?.results)
+            ? json.results
+            : Array.isArray(json)
+            ? json
+            : [];
           setResults(arr.slice(0, 8));
         }
       } catch (e: any) {
@@ -84,18 +91,22 @@ export default function SearchBar() {
           {!loading && !error && results.length === 0 && (
             <div className="px-3 py-2 text-sm text-gray-500">Aucun résultat</div>
           )}
-          {!loading && !error && results.map((r) => (
-            <button
-              key={`${r.type}:${r.id}`}
-              onClick={() => goTo(r)}
-              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50"
-            >
-              <span className="inline-block rounded bg-gray-100 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-gray-600">
-                {r.type}
-              </span>
-              <span className="truncate">{r.label || r.name || r.id}</span>
-            </button>
-          ))}
+          {!loading &&
+            !error &&
+            results.map((r) => (
+              <button
+                key={`${r.type}:${r.id}`}
+                onClick={() => goTo(r)}
+                className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50"
+              >
+                <span className="inline-block rounded bg-gray-100 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-gray-600">
+                  {r.type}
+                </span>
+                <span className="truncate">
+                  {r.label || r.name || r.id}
+                </span>
+              </button>
+            ))}
         </div>
       )}
     </div>
