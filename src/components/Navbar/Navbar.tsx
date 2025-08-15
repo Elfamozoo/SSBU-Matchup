@@ -1,66 +1,46 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import {NavLink} from "../NavLink/NavLink";
+import React from "react";
+import { Link } from "react-router-dom";
+import SearchBar from "../SearchBar";
+import { useFavorites } from "../../context/FavoritesContext";
 
-const Navbar = () => {
-    const [isModalOpen, setModalOpen] = useState(false);
-    return (
-        <div className="flex container w-full mx-auto justify-between items-center font-bold text-2xl px-5 py-6">
-            <Link to="/">
-                <img className="block h-8 w-auto" src={`/assets/logo.png`}></img>
-            </Link>
-            <nav className="hidden md:flex space-x-10 items-center">
-                <NavLink/>
-            </nav>
-            <div className="md:hidden">
-                {isModalOpen ? (
-                    <div
-                        className="bg-#161B21 border-1px border-red-100 fixed w-24rem right-0 top-0 h-100vh transition translate-x-1px rounded-lg text-white"
-                    >
-                        <div className="pt-5 pb-6 px-5">
-                            <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                                    onClick={() => setModalOpen(!isModalOpen)}>
-                                <svg
-                                    className="w-6 h-6"
-                                    fill="currentColor"
-                                    viewBox="0 0 20 20"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                >
-                                    <path
-                                        fillRule="evenodd"
-                                        d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                                        clipRule="evenodd"
-                                    />
-                                </svg>
-                            </button>
+export default function Navbar() {
+  const { favorites } = useFavorites();
+  const favCount =
+    favorites instanceof Map ? favorites.size : (favorites?.length ?? 0);
 
-                            <div className="mt-5rem z-10 relative">
-                                <div className="absolute right-0 mt-2 py-2 bg-white rounded-md shadow-xl">
-                                    <NavLink className="block px-4 py-2 text-gray-800 rounded-md hover:bg-gray-200"/>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                ) : (
-                    <button className="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded"
-                            onClick={() => setModalOpen(!isModalOpen)}>
-                        <svg
-                            className="w-6 h-6"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fillRule="evenodd"
-                                d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-                                clipRule="evenodd"
-                            />
-                        </svg>
-                    </button>
-                )}
-            </div>
+  return (
+    <nav className="w-full border-b border-gray-200 bg-white">
+      <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-2">
+        {/* Zone gauche: logo + liens */}
+        <div className="flex items-center gap-3">
+          <Link to="/" className="font-semibold">
+            SSBU Matchup
+          </Link>
+          <Link
+            to="/matchup"
+            className="text-sm text-gray-600 hover:text-gray-900"
+          >
+            Matchups
+          </Link>
+          <Link
+            to="/favorites"
+            className="relative text-sm text-gray-600 hover:text-gray-900"
+          >
+            Favoris
+            <span
+              aria-label="Nombre de favoris"
+              className="ml-1 inline-flex min-w-[18px] items-center justify-center rounded-full bg-indigo-600 px-1.5 text-[11px] leading-5 text-white"
+            >
+              {favCount}
+            </span>
+          </Link>
         </div>
-    );
-};
 
-export default Navbar;
+        {/* Zone droite: SearchBar */}
+        <div className="ml-auto w-full max-w-md">
+          <SearchBar />
+        </div>
+      </div>
+    </nav>
+  );
+}

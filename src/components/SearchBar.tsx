@@ -1,68 +1,102 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useMemo, useState } from "react";
 import { useDebounce } from "../hooks/useDebounce";
+import { useNavigate } from "react-router-dom";
 
-/**
- * A global search bar component that queries the Smash API.
- */
+type SearchItem = {
+  type: "character" | "player" | "event" | "vod" | string;
+  id: string;
+  label?: string;
+  name?: string;
+  [k: string]: any;
+};
+
 export default function SearchBar() {
   const [query, setQuery] = useState("");
-  const debouncedQuery = useDebounce(query, 300);
-  const [results, setResults] = useState<{ id: string; label: string }[]>([]);
+  const debounced = useDebounce(query, 300);
+  const [results, setResults] = useState<SearchItem[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
+  const endpoint = useMemo(() => {
+    const base = (import.meta as any)?.env?.VITE_SMASH_API || "/api";
+    return `${base}/search?q=`;
+  }, []);
+
   useEffect(() => {
-    async function fetchResults() {
-      if (!debouncedQuery) {
+    let aborted = false;
+    const ac = new AbortController();
+
+    async function run() {
+      if (!debounced.trim()) {
         setResults([]);
         return;
       }
+      setLoading(true);
+      setError(null);
       try {
-        // Replace this URL with the appropriate endpoint for your API.
-        const res = await fetch(`/api/search?q=${encodeURIComponent(debouncedQuery)}`);
-        if (!res.ok) {
-          setResults([]);
-          return;
+        const res = await fetch(`${endpoint}${encodeURIComponent(debounced)}`, {
+          signal: ac.signal
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        if (!aborted) {
+          const arr: SearchItem[] = Array.isArray(json?.results) ? json.results : Array.isArray(json) ? json : [];
+          setResults(arr.slice(0, 8));
         }
-        const data = await res.json();
-        if (Array.isArray(data)) {
-          setResults(data);
-        } else {
-          setResults([]);
+      } catch (e: any) {
+        if (!aborted && e?.name !== "AbortError") {
+          setError(e?.message || "search failed");
         }
-      } catch {
-        // ignore network errors
-        setResults([]);
+      } finally {
+        if (!aborted) setLoading(false);
       }
     }
-    fetchResults();
-  }, [debouncedQuery]);
+    run();
+    return () => {
+      aborted = true;
+      ac.abort();
+    };
+  }, [debounced, endpoint]);
+
+  function goTo(item: SearchItem) {
+    const label = item.label || item.name || item.id;
+    navigate(`/search?q=${encodeURIComponent(label)}`);
+  }
 
   return (
-    <div className="relative">
+    <div className="relative w-full">
       <input
-        type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Recherche..."
-        className="rounded-lg border p-2 w-64"
+        placeholder="Rechercher un perso, joueur, event, VOD…"
+        className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-500"
+        aria-label="Barre de recherche globale"
       />
-      {results.length > 0 && (
-        <ul className="absolute z-50 bg-white dark:bg-gray-800 mt-1 w-full shadow-lg max-h-60 overflow-y-auto rounded-lg">
-          {results.map((r) => (
-            <li
-              key={r.id}
-              className="px-3 py-2 cursor-pointer hover:bg-gray-200 dark:hover:bg-gray-700"
-              onClick={() => {
-                navigate(`/videoplayer/${r.id}`);
-                setResults([]);
-                setQuery("");
-              }}
+      {Boolean(query) && (
+        <div className="absolute z-50 mt-1 w-full rounded-md border border-gray-200 bg-white shadow-lg">
+          {loading && (
+            <div className="px-3 py-2 text-sm text-gray-500">Recherche…</div>
+          )}
+          {error && (
+            <div className="px-3 py-2 text-sm text-red-600">{error}</div>
+          )}
+          {!loading && !error && results.length === 0 && (
+            <div className="px-3 py-2 text-sm text-gray-500">Aucun résultat</div>
+          )}
+          {!loading && !error && results.map((r) => (
+            <button
+              key={`${r.type}:${r.id}`}
+              onClick={() => goTo(r)}
+              className="flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-gray-50"
             >
-              {r.label}
-            </li>
+              <span className="inline-block rounded bg-gray-100 px-1.5 py-0.5 text-[10px] uppercase tracking-wide text-gray-600">
+                {r.type}
+              </span>
+              <span className="truncate">{r.label || r.name || r.id}</span>
+            </button>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
